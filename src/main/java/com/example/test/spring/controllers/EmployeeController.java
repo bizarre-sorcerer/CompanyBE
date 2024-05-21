@@ -10,30 +10,38 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/employee/")
+@RequestMapping("/employees/")
 @RequiredArgsConstructor
 public class EmployeeController {
     private final EmployeeService employeeService;
-    private final EmployeesMapper employeeMapper;
 
     @GetMapping("/")
-    public String Hello() {
-        return "Hello World";
-    }
-
-    @GetMapping("/employees")
-    public List<Employee> getEmployees() {
+    public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 
-    @PostMapping("/employees")
-    public Employee createEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        Employee employee = employeeMapper.toEntity(employeeDTO);
-        return employeeService.createEmployee(employee);
+    @GetMapping("/get-employee-byId")
+    public EmployeeDTO getEmployeeById(EmployeeDTO employeeDTO){
+        return employeeService.getEmployeeById(employeeDTO.getId());
     }
 
-    @DeleteMapping("/clear-employees")
+    @PostMapping("/add-employee")
+    public EmployeeDTO addEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        return employeeService.createEmployee(employeeDTO);
+    }
+
+    @PutMapping("/update-employee")
+    public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO employeeDTO){
+        return employeeService.updateEmployee(employeeDTO);
+    }
+
+    @DeleteMapping("/clear-all")
     public void clearAllEmployees() {
         employeeService.deleteAll();
+    }
+
+    @DeleteMapping("/delete-byId")
+    public void deleteById(EmployeeDTO employeeDTO){
+        employeeService.deleteEmployeeById(employeeDTO.getId());
     }
 }
