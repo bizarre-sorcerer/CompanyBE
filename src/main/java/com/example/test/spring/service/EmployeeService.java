@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface EmployeeService {
-    List<Employee> getAllEmployees();
+    List<EmployeeDTO> getAllEmployees();
 
     EmployeeDTO getEmployeeById(UUID employeeID);
 
