@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/employees/")
@@ -20,9 +21,9 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
-    @GetMapping("/get-employee-byId")
-    public EmployeeDTO getEmployeeById(EmployeeDTO employeeDTO){
-        return employeeService.getEmployeeById(employeeDTO.getId());
+    @GetMapping("/get-employee-byId/{employeeId}")
+    public EmployeeDTO getEmployeeById(@PathVariable UUID employeeId, EmployeeDTO employeeDTO){
+        return employeeService.getEmployeeById(employeeId);
     }
 
     @PostMapping("/add-employee")
@@ -30,9 +31,9 @@ public class EmployeeController {
         return employeeService.createEmployee(employeeDTO);
     }
 
-    @PutMapping("/update-employee")
-    public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO employeeDTO){
-        return employeeService.updateEmployee(employeeDTO);
+    @PutMapping("/update-employee/{employeeId}")
+    public EmployeeDTO updateEmployee(@PathVariable UUID employeeId, @RequestBody EmployeeDTO employeeDTO){
+        return employeeService.updateEmployee(employeeId, employeeDTO);
     }
 
     @DeleteMapping("/clear-all")
@@ -40,8 +41,8 @@ public class EmployeeController {
         employeeService.deleteAll();
     }
 
-    @DeleteMapping("/delete-byId")
-    public void deleteById(EmployeeDTO employeeDTO){
-        employeeService.deleteEmployeeById(employeeDTO.getId());
+    @DeleteMapping("/delete-byId/{employeeId}")
+    public void deleteById(@PathVariable UUID employeeId, EmployeeDTO employeeDTO){
+        employeeService.deleteEmployeeById(employeeId);
     }
 }

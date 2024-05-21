@@ -47,8 +47,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO){
-        UUID employeeId = employeeDTO.getId();
+    public EmployeeDTO updateEmployee(UUID employeeId, EmployeeDTO employeeDTO){
+//        UUID employeeId = employeeDTO.getId();
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
 
         if (employeeOptional.isPresent()){
@@ -61,7 +61,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeDTO;
     }
 
-
     @Override
     public void deleteAll() {
         employeeRepository.deleteAll();
@@ -71,5 +70,4 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteEmployeeById(UUID employeeId){
         employeeRepository.deleteById(employeeId);
     }
-
 }
