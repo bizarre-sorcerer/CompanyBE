@@ -1,35 +1,38 @@
 package com.example.test.spring.service.impl;
 
 import com.example.test.spring.dto.EmployeeDTO;
+import com.example.test.spring.entities.Department;
 import com.example.test.spring.entities.Employee;
 import com.example.test.spring.mappers.EmployeesMapper;
+import com.example.test.spring.repositories.DepartmentsRepository;
 import com.example.test.spring.repositories.EmployeeRepository;
 import com.example.test.spring.service.EmployeeService;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
+    private final DepartmentsRepository departmentsRepository;
     private final EmployeesMapper employeesMapper;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeesMapper employeesMapper) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeesMapper employeesMapper, DepartmentsRepository departmentsRepository) {
         this.employeeRepository = employeeRepository;
         this.employeesMapper = employeesMapper;
+        this.departmentsRepository = departmentsRepository;
     }
 
     @Override
-    public EmployeeDTO getEmployeeById(UUID employeeId){
+    public EmployeeDTO getEmployeeById(Integer employeeId){
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
 
         if (employeeOptional.isPresent()) {
             Employee employee = employeeOptional.get();
-            return employeesMapper.toDto(employee);
+            return employeesMapper.toDTO(employee);
         } else {
             return null;
         }
@@ -40,28 +43,34 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> employees = employeeRepository.findAll();
 
         return employees.stream()
-                .map(employeesMapper::toDto)
+                .map(employeesMapper::toDTO)
                 .collect(Collectors.toList());
     };
 
     @Override
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
         Employee employee = employeesMapper.toEntity(employeeDTO);
+
+        Department department = departmentsRepository.findById(employeeDTO.getDepartmentId())
+                .orElseThrow(() -> new EntityNotFoundException("Department not found"));
+
+        // Set the fetched Department entity in the Employee entity
+        employee.setDepartmentId(department);
+
         Employee saveEmployee = employeeRepository.save(employee);
-        return employeesMapper.toDto(saveEmployee);
+        return employeesMapper.toDTO(saveEmployee);
     }
 
     @Override
-    public EmployeeDTO updateEmployee(UUID employeeId, EmployeeDTO employeeDTO){
-//        UUID employeeId = employeeDTO.getId();
+    public EmployeeDTO updateEmployee(Integer employeeId, EmployeeDTO employeeDTO){
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
 
         if (employeeOptional.isPresent()){
             Employee employee = employeeOptional.get();
-            employeesMapper.toDto(employee);
+            employeesMapper.toDTO(employee);
 
             employeeRepository.save(employee);
-            return employeesMapper.toDto(employee);
+            return employeesMapper.toDTO(employee);
         }
         return employeeDTO;
     }
@@ -72,7 +81,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void deleteEmployeeById(UUID employeeId){
+    public void deleteEmployeeById(Integer employeeId){
         employeeRepository.deleteById(employeeId);
     }
 }

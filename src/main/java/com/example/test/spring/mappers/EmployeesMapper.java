@@ -8,5 +8,5 @@ import org.mapstruct.Mapper;
 public interface EmployeesMapper {
     Employee toEntity(EmployeeDTO employeeDTO);
 
-    EmployeeDTO toDto(Employee employee);
+    EmployeeDTO toDTO(Employee employee);
 }

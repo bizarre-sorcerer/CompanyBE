@@ -10,13 +10,13 @@ import java.util.UUID;
 public interface EmployeeService {
     List<EmployeeDTO> getAllEmployees();
 
-    EmployeeDTO getEmployeeById(UUID employeeID);
+    EmployeeDTO getEmployeeById(Integer employeeID);
 
     EmployeeDTO createEmployee(EmployeeDTO employee);
 
-    EmployeeDTO updateEmployee(UUID employeeId, EmployeeDTO employeeDTO);
+    EmployeeDTO updateEmployee(Integer employeeId, EmployeeDTO employeeDTO);
 
     void deleteAll();
 
-    void deleteEmployeeById(UUID employeeId);
+    void deleteEmployeeById(Integer employeeId);
 }

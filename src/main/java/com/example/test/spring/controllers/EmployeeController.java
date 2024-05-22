@@ -3,12 +3,10 @@ package com.example.test.spring.controllers;
 import com.example.test.spring.dto.EmployeeDTO;
 import com.example.test.spring.mappers.EmployeesMapper;
 import com.example.test.spring.service.EmployeeService;
-import com.example.test.spring.entities.Employee;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/employees/")
@@ -22,7 +20,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/get-employee-byId/{employeeId}")
-    public EmployeeDTO getEmployeeById(@PathVariable UUID employeeId, EmployeeDTO employeeDTO){
+    public EmployeeDTO getEmployeeById(@PathVariable Integer employeeId, EmployeeDTO employeeDTO){
         return employeeService.getEmployeeById(employeeId);
     }
 
@@ -32,7 +30,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/update-employee/{employeeId}")
-    public EmployeeDTO updateEmployee(@PathVariable UUID employeeId, @RequestBody EmployeeDTO employeeDTO){
+    public EmployeeDTO updateEmployee(@PathVariable Integer employeeId, @RequestBody EmployeeDTO employeeDTO){
         return employeeService.updateEmployee(employeeId, employeeDTO);
     }
 
@@ -42,7 +40,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/delete-byId/{employeeId}")
-    public void deleteById(@PathVariable UUID employeeId, EmployeeDTO employeeDTO){
+    public void deleteById(@PathVariable Integer employeeId, EmployeeDTO employeeDTO){
         employeeService.deleteEmployeeById(employeeId);
     }
 }

@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Setter
 @Getter
 @AllArgsConstructor
@@ -16,30 +14,40 @@ import java.util.UUID;
 @Table(name = "employees")
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "employee_generator")
+    @SequenceGenerator(name = "employee_generator", sequenceName = "employees_seq", allocationSize = 1)
+    private Integer id;
 
-    @Column(name="first_name")
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name="last_name")
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name="department")
-    private String department;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    private Department departmentId;
 
-    @Column(name="skill_level")
+    @Column(name = "skill_level")
     private String skillLevel;
 
-    @Column(name="role")
+    @Column(name = "role")
     private String role;
 
-    @Column(name="experience")
+    @Column(name = "experience")
     private String experience;
 
-    @Column(name="salary")
+    @Column(name = "salary")
     private String salary;
+
+    public void setDepartmentId(Department departmentId){
+        this.departmentId = departmentId;
+    }
+
+    public Department getDepartmentId(){
+        return departmentId;
+    }
 }

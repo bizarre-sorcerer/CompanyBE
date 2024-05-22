@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Setter
 @Getter
 @AllArgsConstructor
@@ -16,8 +14,9 @@ import java.util.UUID;
 @Table(name = "departments")
 public class Department {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "departments_generator")
+    @SequenceGenerator(name = "departments_generator", sequenceName = "departments_seq", allocationSize = 1)
+    private Integer id;
 
     @Column(name="department_name")
     private String departmentName;
