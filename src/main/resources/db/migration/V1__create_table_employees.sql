@@ -28,19 +28,10 @@ create table if not exists employees(
     salary                          varchar(255) references qualification(salary)
 );
 
-create table if not exists psychlogical_evaluation(
+create table if not exists psychological_evaluation(
     id                              integer primary key,
     employee                        integer references employees(id),
     evaluation                      varchar(255)
-);
-
-create table if not exists projects(
-    id                              integer primary key,
-    project_name                    varchar(255),
-    start_data                      varchar(255),
-    deadline_data                   varchar(255),
-    responsible_team                varchar(255),
-    budget                          varchar(255)
 );
 
 create table if not exists teams(
@@ -57,10 +48,20 @@ create table if not exists team_membership(
     foreign key (employee_id) references employees(id)
 );
 
+create table if not exists projects(
+    id                              integer primary key,
+    project_name                    varchar(255),
+    start_data                      varchar(255),
+    deadline_data                   varchar(255),
+    responsible_team                varchar(255) references teams(id),
+    budget                          varchar(255)
+);
+
 create table if not exists tasks(
     id                              integer primary key,
     task_name                       varchar(255),
-    responsible_employee            varchar(255),
+    part_of                         integer references projects(id),
+    responsible_employee            varchar(255) references employees(id),
     start_date                      varchar(255),
     deadline_date                   varchar(255)
 );
@@ -68,8 +69,17 @@ create table if not exists tasks(
 create table if not exists project_attachments(
     id                              integer primary key,
     attachment                      varchar(255),
-    attached_by                     varchar(255)
+    attachet_to                     integer references projects(id),
+    attached_by                     integer references employees(id)
 );
 
-CREATE SEQUENCE departments_seq;
-CREATE SEQUENCE employees_seq;
+create sequence if not exists departments_seq;
+create sequence if not exists position;
+create sequence if not exists qualification;
+create sequence if not exists employees_seq;
+create sequence if not exists psychological_evaluation;
+create sequence if not exists teams;
+create sequence if not exists team_membership;
+create sequence if not exists projects;
+create sequence if not exists tasks;
+create sequence if not exists project_attachments
