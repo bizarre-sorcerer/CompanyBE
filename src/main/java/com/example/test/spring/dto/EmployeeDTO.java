@@ -1,5 +1,8 @@
 package com.example.test.spring.dto;
 
+import com.example.test.spring.entities.Department;
+import com.example.test.spring.entities.Position;
+import com.example.test.spring.entities.Qualification;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,9 +15,9 @@ public class EmployeeDTO implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    private Integer departmentId;
-    private String skillLevel;
-    private String role;
+    private Department department;
+    private Qualification qualification;
+    private Position position;
     private String experience;
     private String salary;
 }

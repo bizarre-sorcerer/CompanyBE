@@ -5,7 +5,7 @@ create table if not exists departments(
     department_name                 varchar(255)
 );
 
-create table if not exists position(
+create table if not exists positions(
     id                              integer primary key,
     job_title                       varchar(255)
 );
@@ -22,10 +22,10 @@ create table if not exists employees(
     last_name                       varchar(255),
     email                           varchar(255),
     department_id                   integer references departments(id),
-    role                            integer references position(id),
+    position_id                     integer references positions(id),
     qualification                   integer references qualification(id),
     experience                      varchar(255),
-    salary                          varchar(255) references qualification(salary)
+    salary                          varchar(255)
 );
 
 create table if not exists psychological_evaluation(
@@ -53,7 +53,7 @@ create table if not exists projects(
     project_name                    varchar(255),
     start_data                      varchar(255),
     deadline_data                   varchar(255),
-    responsible_team                varchar(255) references teams(id),
+    responsible_team                integer references teams(id),
     budget                          varchar(255)
 );
 
@@ -61,7 +61,7 @@ create table if not exists tasks(
     id                              integer primary key,
     task_name                       varchar(255),
     part_of                         integer references projects(id),
-    responsible_employee            varchar(255) references employees(id),
+    responsible_employee            integer references employees(id),
     start_date                      varchar(255),
     deadline_date                   varchar(255)
 );
@@ -74,7 +74,7 @@ create table if not exists project_attachments(
 );
 
 create sequence if not exists departments_seq;
-create sequence if not exists position;
+create sequence if not exists positions;
 create sequence if not exists qualification;
 create sequence if not exists employees_seq;
 create sequence if not exists psychological_evaluation;

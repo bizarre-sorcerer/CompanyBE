@@ -14,32 +14,32 @@ public class DepartmentsController {
     private final DepartmentsService departmentsService;
 
     @GetMapping("/")
-    public List<DepartmentDTO> getAllEmployees() {
+    public List<DepartmentDTO> getAllDepartments() {
         return departmentsService.getAllDepartments();
     }
 
-    @GetMapping("/get-department-byId/{employeeId}")
-    public DepartmentDTO getEmployeeById(@PathVariable Integer departmentId, DepartmentDTO departmentDTO){
+    @GetMapping("/get-byId/{employeeId}")
+    public DepartmentDTO getDepartmentById(@PathVariable Integer departmentId, DepartmentDTO departmentDTO){
         return departmentsService.getDepartmentById(departmentId);
     }
 
-    @PostMapping("/add-department")
-    public DepartmentDTO addEmployee(@RequestBody DepartmentDTO departmentDTO) {
+    @PostMapping("/add")
+    public DepartmentDTO addDepartment(@RequestBody DepartmentDTO departmentDTO) {
         return departmentsService.addDepartment(departmentDTO);
     }
 
-    @PutMapping("/update-department/{employeeId}")
-    public DepartmentDTO updateEmployee(@PathVariable Integer employeeId, @RequestBody DepartmentDTO departmentDTO){
+    @PutMapping("/update/{employeeId}")
+    public DepartmentDTO updateDepartment(@PathVariable Integer employeeId, @RequestBody DepartmentDTO departmentDTO){
         return departmentsService.updateDepartment(employeeId, departmentDTO);
     }
 
-    @DeleteMapping("/clear-all")
-    public void clearAllEmployees() {
+    @DeleteMapping("/delete-all")
+    public void deleteAllDepartments() {
         departmentsService.deleteAll();
     }
 
     @DeleteMapping("/delete-byId/{departmentId}")
-    public void deleteById(@PathVariable Integer departmentId, DepartmentDTO departmentDTO){
+    public void deleteDepartmentById(@PathVariable Integer departmentId){
         departmentsService.deleteDepartmentById(departmentId);
     }
 }

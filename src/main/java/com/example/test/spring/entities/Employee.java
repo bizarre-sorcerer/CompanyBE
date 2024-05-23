@@ -29,25 +29,19 @@ public class Employee {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
-    private Department departmentId;
+    private Department department;
 
-    @Column(name = "skill_level")
-    private String skillLevel;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "qualification")
+    private Qualification qualification;
 
-    @Column(name = "role")
-    private String role;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "position_id")
+    private Position position;
 
     @Column(name = "experience")
     private String experience;
 
     @Column(name = "salary")
     private String salary;
-
-    public void setDepartmentId(Department departmentId){
-        this.departmentId = departmentId;
-    }
-
-    public Department getDepartmentId(){
-        return departmentId;
-    }
 }

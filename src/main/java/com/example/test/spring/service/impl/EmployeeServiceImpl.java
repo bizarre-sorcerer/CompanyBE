@@ -3,11 +3,16 @@ package com.example.test.spring.service.impl;
 import com.example.test.spring.dto.EmployeeDTO;
 import com.example.test.spring.entities.Department;
 import com.example.test.spring.entities.Employee;
+import com.example.test.spring.entities.Position;
+import com.example.test.spring.entities.Qualification;
 import com.example.test.spring.mappers.EmployeesMapper;
 import com.example.test.spring.repositories.DepartmentsRepository;
 import com.example.test.spring.repositories.EmployeeRepository;
+import com.example.test.spring.repositories.PositionRepository;
+import com.example.test.spring.repositories.QualificationRepository;
 import com.example.test.spring.service.EmployeeService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,12 +23,22 @@ import java.util.stream.Collectors;
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final DepartmentsRepository departmentsRepository;
+    private final QualificationRepository qualificationRepository;
+    private final PositionRepository positionRepository;
     private final EmployeesMapper employeesMapper;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeesMapper employeesMapper, DepartmentsRepository departmentsRepository) {
+    public EmployeeServiceImpl(
+            EmployeeRepository employeeRepository,
+            DepartmentsRepository departmentsRepository,
+            QualificationRepository qualificationRepository,
+            PositionRepository positionRepository,
+            EmployeesMapper employeesMapper)
+    {
         this.employeeRepository = employeeRepository;
-        this.employeesMapper = employeesMapper;
         this.departmentsRepository = departmentsRepository;
+        this.qualificationRepository = qualificationRepository;
+        this.positionRepository = positionRepository;
+        this.employeesMapper = employeesMapper;
     }
 
     @Override
@@ -48,14 +63,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     };
 
     @Override
+    @Transactional
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
         Employee employee = employeesMapper.toEntity(employeeDTO);
 
-        Department department = departmentsRepository.findById(employeeDTO.getDepartmentId())
-                .orElseThrow(() -> new EntityNotFoundException("Department not found"));
+        Department department = departmentsRepository.findById(employeeDTO.getDepartment().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Department not found by this id"));
 
-        // Set the fetched Department entity in the Employee entity
-        employee.setDepartmentId(department);
+        Qualification qualification = qualificationRepository.findById(employeeDTO.getQualification().getId())
+                        .orElseThrow(() -> new EntityNotFoundException("Qualification not found by this id "));
+
+        Position position = positionRepository.findById(employeeDTO.getPosition().getId())
+                        .orElseThrow(() -> new EntityNotFoundException("Position not found by this id"));
+
+        employee.setDepartment(department);
+        employee.setQualification(qualification);
+        employee.setPosition(position);
 
         Employee saveEmployee = employeeRepository.save(employee);
         return employeesMapper.toDTO(saveEmployee);
@@ -63,17 +86,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDTO updateEmployee(Integer employeeId, EmployeeDTO employeeDTO){
-        Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
+        Employee existingEmployee = employeeRepository.findById(employeeId)
+                        .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
 
-        if (employeeOptional.isPresent()){
-            Employee employee = employeeOptional.get();
-            employeesMapper.toDTO(employee);
+        Employee updatedEmployee = employeesMapper.toEntity(employeeDTO);
+        employeeRepository.save(updatedEmployee);
 
-            employeeRepository.save(employee);
-            return employeesMapper.toDTO(employee);
-        }
-        return employeeDTO;
-    }
+        return employeesMapper.toDTO(updatedEmployee);
+    };
 
     @Override
     public void deleteAll() {
