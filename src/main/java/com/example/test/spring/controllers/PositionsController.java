@@ -1,6 +1,5 @@
 package com.example.test.spring.controllers;
 
-import com.example.test.spring.dto.EmployeeDTO;
 import com.example.test.spring.dto.PositionDTO;
 import com.example.test.spring.service.PositionService;
 import lombok.RequiredArgsConstructor;
@@ -9,18 +8,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/positions/")
+@RequestMapping("/positions")
 @RequiredArgsConstructor
 public class PositionsController {
     private final PositionService positionService;
 
-    @GetMapping("/get-all")
+    @GetMapping
     public List<PositionDTO> getAllPositions(){
         return positionService.getAllPositions();
     }
 
-    @GetMapping("/get-byId/{positionId}")
-    public PositionDTO getPositionById(@PathVariable Integer positionId, PositionDTO positionDTO){
+    @GetMapping("/{positionId}")
+    public PositionDTO getPositionById(@PathVariable Integer positionId){
         return positionService.getPositionById(positionId);
     }
 
@@ -29,13 +28,13 @@ public class PositionsController {
         return positionService.addPosition(positionDTO);
     }
 
-    @DeleteMapping("/delete-all")
+    @DeleteMapping("/all")
     public void clearAllEmployees() {
         positionService.deleteAll();
     }
 
-    @DeleteMapping("/delete-byId/{positionId}")
-    public void deletePositionById(@PathVariable Integer positionId){
-        positionService.deleteById(positionId);
+    @DeleteMapping("/{id}")
+    public void deletePositionById(@PathVariable Integer id){
+        positionService.deleteById(id);
     }
 }
