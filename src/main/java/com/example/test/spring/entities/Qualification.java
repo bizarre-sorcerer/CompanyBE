@@ -13,6 +13,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "qualification")
 public class Qualification {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "employee_generator")
     @SequenceGenerator(name = "employee_generator", sequenceName = "employees_seq", allocationSize = 1)
