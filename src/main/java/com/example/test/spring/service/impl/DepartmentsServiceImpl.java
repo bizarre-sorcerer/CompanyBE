@@ -22,7 +22,7 @@ public class DepartmentsServiceImpl implements DepartmentsService {
 
     @Override
     public Page<DepartmentDTO> getAllDepartments(Pageable pageable) {
-        log.info("Get all dep");
+        log.info("Get all departments");
         Page<Department> departments = departmentsRepository.findAll(pageable);
         return departments.map(departmentsMapper::toDTO);
     }
@@ -30,7 +30,7 @@ public class DepartmentsServiceImpl implements DepartmentsService {
     @Override
     public DepartmentDTO getDepartmentById(Integer id) {
         Department department = departmentsRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Department not found with id: "+ id));
+                .orElseThrow(() -> new EntityNotFoundException("Department not found with id: " + id));
         return departmentsMapper.toDTO(department);
     }
 

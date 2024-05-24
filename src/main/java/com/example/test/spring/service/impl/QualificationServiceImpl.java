@@ -6,6 +6,8 @@ import com.example.test.spring.entities.Qualification;
 import com.example.test.spring.mappers.QualificationMapper;
 import com.example.test.spring.repositories.QualificationRepository;
 import com.example.test.spring.service.QualificationService;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,14 +15,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class QualificationServiceImpl implements QualificationService {
     private final QualificationRepository qualificationRepository;
     private final QualificationMapper qualificationMapper;
-
-    public QualificationServiceImpl(QualificationRepository qualificationRepository, QualificationMapper qualificationMapper) {
-        this.qualificationRepository = qualificationRepository;
-        this.qualificationMapper = qualificationMapper;
-    }
 
     @Override
     public List<QualificationDTO> getAllQualifications() {
@@ -32,15 +30,10 @@ public class QualificationServiceImpl implements QualificationService {
     }
 
     @Override
-    public QualificationDTO getQualificationById(Integer qualificationId) {
-        Optional<Qualification> qualificationOptional = qualificationRepository.findById(qualificationId);
-
-        if (qualificationOptional.isPresent()){
-            Qualification qualification = qualificationOptional.get();
-            return qualificationMapper.toDTO(qualification);
-        } else {
-            return null;
-        }
+    public QualificationDTO getQualificationById(Integer id) {
+        Qualification qualification = qualificationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Department not found with id: " + id));
+        return qualificationMapper.toDTO(qualification);
     }
 
     @Override
@@ -56,7 +49,7 @@ public class QualificationServiceImpl implements QualificationService {
     }
 
     @Override
-    public void deleteEmployeeById(Integer employeeId) {
-        qualificationRepository.deleteById(employeeId);
+    public void deleteEmployeeById(Integer id) {
+        qualificationRepository.deleteById(id);
     }
 }

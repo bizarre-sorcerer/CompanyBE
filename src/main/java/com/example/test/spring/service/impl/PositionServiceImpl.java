@@ -5,21 +5,18 @@ import com.example.test.spring.entities.Position;
 import com.example.test.spring.mappers.PositionsMapper;
 import com.example.test.spring.repositories.PositionRepository;
 import com.example.test.spring.service.PositionService;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class PositionServiceImpl implements PositionService {
+
     private final PositionRepository positionRepository;
     private final PositionsMapper positionsMapper;
-
-    public PositionServiceImpl(PositionRepository positionRepository, PositionsMapper positionsMapper) {
-        this.positionRepository = positionRepository;
-        this.positionsMapper = positionsMapper;
-    }
 
     @Override
     public List<PositionDTO> getAllPositions() {
@@ -28,19 +25,13 @@ public class PositionServiceImpl implements PositionService {
         return positions.stream()
                 .map(positionsMapper::toDTO)
                 .collect(Collectors.toList());
-
     }
 
     @Override
-    public PositionDTO getPositionById(Integer positionId) {
-        Optional<Position> positionOptional = positionRepository.findById(positionId);
-
-        if (positionOptional.isPresent()) {
-            Position position = positionOptional.get();
-            return positionsMapper.toDTO(position);
-        } else {
-            return null;
-        }
+    public PositionDTO getPositionById(Integer id) {
+        Position position = positionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Position not found with id: " + id));
+        return positionsMapper.toDTO(position);
     }
 
     @Override
@@ -56,8 +47,8 @@ public class PositionServiceImpl implements PositionService {
     }
 
     @Override
-    public void deleteById(Integer positionId) {
-        positionRepository.deleteById(positionId);
+    public void deleteById(Integer id) {
+        positionRepository.deleteById(id);
     }
 }
 
