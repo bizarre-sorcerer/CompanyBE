@@ -27,16 +27,16 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "department_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "department")
     private Department department;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "qualification")
     private Qualification qualification;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "position_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "position")
     private Position position;
 
     @Column(name = "experience")

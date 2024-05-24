@@ -13,6 +13,9 @@ import com.example.test.spring.repositories.QualificationRepository;
 import com.example.test.spring.service.EmployeeService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,8 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             DepartmentsRepository departmentsRepository,
             QualificationRepository qualificationRepository,
             PositionRepository positionRepository,
-            EmployeesMapper employeesMapper)
-    {
+            EmployeesMapper employeesMapper) {
         this.employeeRepository = employeeRepository;
         this.departmentsRepository = departmentsRepository;
         this.qualificationRepository = qualificationRepository;
@@ -42,7 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDTO getEmployeeById(Integer employeeId){
+    public EmployeeDTO getEmployeeById(Integer employeeId) {
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
 
         if (employeeOptional.isPresent()) {
@@ -54,13 +56,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDTO> getAllEmployees(){
-        List<Employee> employees = employeeRepository.findAll();
+    public Page<EmployeeDTO> getAllEmployees(Pageable pageable) {
+        Page<Employee> employees = employeeRepository.findAll(pageable);
 
-        return employees.stream()
+        List<EmployeeDTO> allEmployees = employees.stream()
                 .map(employeesMapper::toDTO)
                 .collect(Collectors.toList());
-    };
+
+        return new PageImpl<>(allEmployees);
+    }
 
     @Override
     @Transactional
@@ -71,10 +75,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new EntityNotFoundException("Department not found by this id"));
 
         Qualification qualification = qualificationRepository.findById(employeeDTO.getQualification().getId())
-                        .orElseThrow(() -> new EntityNotFoundException("Qualification not found by this id "));
+                .orElseThrow(() -> new EntityNotFoundException("Qualification not found by this id "));
 
         Position position = positionRepository.findById(employeeDTO.getPosition().getId())
-                        .orElseThrow(() -> new EntityNotFoundException("Position not found by this id"));
+                .orElseThrow(() -> new EntityNotFoundException("Position not found by this id"));
 
         employee.setDepartment(department);
         employee.setQualification(qualification);
@@ -85,15 +89,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDTO updateEmployee(Integer employeeId, EmployeeDTO employeeDTO){
-        Employee existingEmployee = employeeRepository.findById(employeeId)
-                        .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
-
-        Employee updatedEmployee = employeesMapper.toEntity(employeeDTO);
-        employeeRepository.save(updatedEmployee);
-
-        return employeesMapper.toDTO(updatedEmployee);
-    };
+    public EmployeeDTO updateEmployee(Integer employeeId, EmployeeDTO employeeDTO) {
+        employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new EntityNotFoundException("Employee not found with id: "+ employeeId));
+        Employee employee = employeesMapper.toEntity(employeeDTO);
+        Employee savedEmployee = employeeRepository.save(employee);
+        return employeesMapper.toDTO(savedEmployee);
+    }
 
     @Override
     public void deleteAll() {
@@ -101,7 +103,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void deleteEmployeeById(Integer employeeId){
+    public void deleteEmployeeById(Integer employeeId) {
         employeeRepository.deleteById(employeeId);
     }
 }

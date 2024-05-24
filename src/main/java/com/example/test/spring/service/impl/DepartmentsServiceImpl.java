@@ -5,41 +5,33 @@ import com.example.test.spring.entities.Department;
 import com.example.test.spring.mappers.DepartmentsMapper;
 import com.example.test.spring.repositories.DepartmentsRepository;
 import com.example.test.spring.service.DepartmentsService;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class DepartmentsServiceImpl implements DepartmentsService {
+
     private final DepartmentsRepository departmentsRepository;
     private final DepartmentsMapper departmentsMapper;
 
-    public DepartmentsServiceImpl(DepartmentsRepository departmentsRepository, DepartmentsMapper departmentsMapper) {
-        this.departmentsRepository = departmentsRepository;
-        this.departmentsMapper = departmentsMapper;
+    @Override
+    public Page<DepartmentDTO> getAllDepartments(Pageable pageable) {
+        log.info("Get all dep");
+        Page<Department> departments = departmentsRepository.findAll(pageable);
+        return departments.map(departmentsMapper::toDTO);
     }
 
     @Override
-    public List<DepartmentDTO> getAllDepartments() {
-        List<Department> departments = departmentsRepository.findAll();
-
-        return departments.stream()
-                .map(departmentsMapper::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public DepartmentDTO getDepartmentById(Integer departmentId) {
-        Optional<Department> departmentOptional = departmentsRepository.findById(departmentId);
-
-        if (departmentOptional.isPresent()){
-            Department department = departmentOptional.get();
-            return departmentsMapper.toDTO(department);
-        } else {
-            return null;
-        }
+    public DepartmentDTO getDepartmentById(Integer id) {
+        Department department = departmentsRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Department not found with id: "+ id));
+        return departmentsMapper.toDTO(department);
     }
 
     @Override
@@ -50,17 +42,12 @@ public class DepartmentsServiceImpl implements DepartmentsService {
     }
 
     @Override
-    public DepartmentDTO updateDepartment(Integer departmentId, DepartmentDTO departmentDTO) {
-        Optional<Department> departmentOptional = departmentsRepository.findById(departmentId);
-
-        if (departmentOptional.isPresent()){
-            Department department = departmentOptional.get();
-            departmentsMapper.toDTO(department);
-
-            departmentsRepository.save(department);
-            return departmentsMapper.toDTO(department);
-        }
-        return departmentDTO;
+    public DepartmentDTO updateDepartment(Integer id, DepartmentDTO departmentDTO) {
+        departmentsRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Department not found with id: "+ id));
+        Department department = departmentsMapper.toEntity(departmentDTO);
+        Department saveDepartment = departmentsRepository.save(department);
+        return departmentsMapper.toDTO(saveDepartment);
     }
 
     @Override
@@ -69,7 +56,10 @@ public class DepartmentsServiceImpl implements DepartmentsService {
     }
 
     @Override
-    public void deleteDepartmentById(Integer employeeId) {
-        departmentsRepository.deleteById(employeeId);
+    public void deleteDepartmentById(Integer id) {
+        departmentsRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Department not found with id: " + id));
+        departmentsRepository.deleteById(id);
     }
 }
+

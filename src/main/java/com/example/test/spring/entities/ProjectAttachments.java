@@ -12,7 +12,7 @@
 //@AllArgsConstructor
 //@NoArgsConstructor
 //@Entity
-//@Table(name = "departments")
+//@Table(name = "project_attachments")
 //public class ProjectAttachments {
 //
 //}
