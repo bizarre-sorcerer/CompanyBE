@@ -2,6 +2,7 @@ package com.example.test.spring.controllers;
 
 import com.example.test.spring.dto.EmployeeDTO;
 import com.example.test.spring.service.EmployeeService;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/employees")
 @RequiredArgsConstructor
 public class EmployeeController {
-
     private final EmployeeService employeeService;
 
     @GetMapping

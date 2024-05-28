@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final QualificationRepository qualificationRepository;
     private final PositionRepository positionRepository;
     private final EmployeesMapper employeesMapper;
+    private final RestTemplate restTemplate;
 
     @Override
     public EmployeeDTO getEmployeeById(Integer id) {
