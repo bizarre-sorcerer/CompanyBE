@@ -17,12 +17,12 @@ public class ProjectsController {
     }
 
     @GetMapping("{id}")
-    public String getById(@PathVariable Long id){
+    public ProjectDTO getById(@PathVariable Long id){
         return projectsService.getById(id);
     }
 
     @PostMapping("add")
-    public String addProject(@RequestBody ProjectDTO projectDTO){
+    public ProjectDTO addProject(@RequestBody ProjectDTO projectDTO){
         return projectsService.addProject(projectDTO);
     }
 

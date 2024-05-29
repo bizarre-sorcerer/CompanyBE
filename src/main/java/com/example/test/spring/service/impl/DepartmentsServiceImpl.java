@@ -31,7 +31,11 @@ public class DepartmentsServiceImpl implements DepartmentsService {
     public DepartmentDTO getDepartmentById(Integer id) {
         Department department = departmentsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Department not found with id: " + id));
-        return departmentsMapper.toDTO(department);
+
+        DepartmentDTO foundDepartment = departmentsMapper.toDTO(department);
+//        foundDepartment.setDepartmentId(Integer.toString(id));
+
+        return foundDepartment;
     }
 
     @Override
@@ -46,6 +50,7 @@ public class DepartmentsServiceImpl implements DepartmentsService {
         departmentsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Department not found with id: "+ id));
         Department department = departmentsMapper.toEntity(departmentDTO);
+        department.setId(id);
         Department saveDepartment = departmentsRepository.save(department);
         return departmentsMapper.toDTO(saveDepartment);
     }

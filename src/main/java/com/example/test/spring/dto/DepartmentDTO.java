@@ -9,6 +9,6 @@ import java.io.Serializable;
 @Setter
 public class DepartmentDTO implements Serializable {
 
-    private Integer id;
+    private String departmentId;
     private String departmentName;
 }

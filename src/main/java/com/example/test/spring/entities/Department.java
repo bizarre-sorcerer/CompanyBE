@@ -21,4 +21,5 @@ public class Department {
 
     @Column(name="department_name")
     private String departmentName;
+
 }

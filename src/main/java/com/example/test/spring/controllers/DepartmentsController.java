@@ -24,7 +24,7 @@ public class DepartmentsController {
         return departmentsService.getDepartmentById(id);
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public DepartmentDTO addDepartment(@RequestBody DepartmentDTO departmentDTO) {
         return departmentsService.addDepartment(departmentDTO);
     }

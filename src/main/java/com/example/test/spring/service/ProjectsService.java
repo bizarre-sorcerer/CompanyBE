@@ -1,13 +1,14 @@
 package com.example.test.spring.service;
 
 import com.example.test.spring.dto.ProjectDTO;
+import org.springframework.data.domain.Page;
 
 public interface ProjectsService {
     String getAll();
 
-    String getById(Long id);
+    ProjectDTO getById(Long id);
 
-    String addProject(ProjectDTO projectDTO);
+    ProjectDTO addProject(ProjectDTO projectDTO);
 
     ProjectDTO updateProject(Long id, ProjectDTO projectDTO);
 
