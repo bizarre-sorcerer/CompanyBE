@@ -18,7 +18,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +31,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final QualificationRepository qualificationRepository;
     private final PositionRepository positionRepository;
     private final EmployeesMapper employeesMapper;
-    private final RestTemplate restTemplate;
 
     @Override
     public EmployeeDTO getEmployeeById(Integer id) {
@@ -55,16 +53,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
         Employee employee = employeesMapper.toEntity(employeeDTO);
-        Integer id = employeeDTO.getDepartment().getId();
 
-        Department department = departmentsRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Department not found with this id: " + id));
+        Integer departmentId = employeeDTO.getDepartment().getId();
+        Integer qualificationId = employeeDTO.getQualification().getId();
+        Integer positionId = employeeDTO.getPosition().getId();
 
-        Qualification qualification = qualificationRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Qualification not found with this id: " + id));
+        Department department = departmentsRepository.findById(departmentId)
+                .orElseThrow(() -> new EntityNotFoundException("Department not found with this id: " + departmentId));
 
-        Position position = positionRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Position not found with this id: " + id));
+        Qualification qualification = qualificationRepository.findById(qualificationId)
+                .orElseThrow(() -> new EntityNotFoundException("Qualification not found with this id: " + qualificationId));
+
+        Position position = positionRepository.findById(positionId)
+                .orElseThrow(() -> new EntityNotFoundException("Position not found with this id: " + positionId));
 
         employee.setDepartment(department);
         employee.setQualification(qualification);

@@ -29,7 +29,7 @@ public class Employee {
     private String email;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "department")
+    @JoinColumn(name = "department_id")
     private Department department;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -37,7 +37,7 @@ public class Employee {
     private Qualification qualification;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "position")
+    @JoinColumn(name = "position_id")
     private Position position;
 
     @Column(name = "experience")
