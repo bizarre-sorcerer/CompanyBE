@@ -10,3 +10,13 @@ services:
       - .:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
+  postgresTest:
+    image: postgres:15.3
+    environment:
+      POSTGRES_DB: "postgredb"
+      POSTGRES_USER: "root_aidar"
+      POSTGRES_PASSWORD: "asdf"
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+    ports:
+      - "5436:5432"

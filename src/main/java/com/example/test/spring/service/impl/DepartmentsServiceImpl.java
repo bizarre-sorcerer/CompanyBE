@@ -29,6 +29,10 @@ public class DepartmentsServiceImpl implements DepartmentsService {
 
     @Override
     public DepartmentDTO getDepartmentById(Integer id) {
+        if (id == null || id <= 0){
+            throw new IllegalArgumentException("Id must be not null and a positive integer");
+        }
+
         Department department = departmentsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Department not found with id: " + id));
         return departmentsMapper.toDTO(department);
