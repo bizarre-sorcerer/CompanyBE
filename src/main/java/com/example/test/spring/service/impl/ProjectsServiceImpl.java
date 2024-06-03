@@ -27,7 +27,8 @@ public class ProjectsServiceImpl implements ProjectsService {
     }
 
     @Override
-    public ProjectDTO updateProject(Long id, ProjectDTO projectDTO){
+    public ProjectDTO updateProject(ProjectDTO projectDTO){
+        Long id = projectDTO.getId();
         return feignService.updateProject(id, projectDTO);
     }
 

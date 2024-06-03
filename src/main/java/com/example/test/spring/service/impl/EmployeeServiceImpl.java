@@ -75,9 +75,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDTO updateEmployee(Integer id, EmployeeDTO employeeDTO) {
+    public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO) {
+        Integer id = employeeDTO.getId();
         employeeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found with id: " + id));
+
         Employee employee = employeesMapper.toEntity(employeeDTO);
         Employee savedEmployee = employeeRepository.save(employee);
         return employeesMapper.toDTO(savedEmployee);

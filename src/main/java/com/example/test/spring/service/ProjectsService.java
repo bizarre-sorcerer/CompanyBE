@@ -10,7 +10,7 @@ public interface ProjectsService {
 
     ProjectDTO addProject(ProjectDTO projectDTO);
 
-    ProjectDTO updateProject(Long id, ProjectDTO projectDTO);
+    ProjectDTO updateProject(ProjectDTO projectDTO);
 
     void deleteAll();
 

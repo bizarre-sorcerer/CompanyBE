@@ -29,9 +29,9 @@ public class EmployeeController {
         return employeeService.createEmployee(employeeDTO);
     }
 
-    @PutMapping("/{id}")
-    public EmployeeDTO updateEmployee(@PathVariable Integer id, @RequestBody EmployeeDTO employeeDTO){
-        return employeeService.updateEmployee(id, employeeDTO);
+    @PutMapping("/")
+    public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO employeeDTO){
+        return employeeService.updateEmployee(employeeDTO);
     }
 
     @DeleteMapping("/all")

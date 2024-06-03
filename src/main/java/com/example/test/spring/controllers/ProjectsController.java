@@ -26,9 +26,9 @@ public class ProjectsController {
         return projectsService.addProject(projectDTO);
     }
 
-    @PutMapping("{id}")
-    public ProjectDTO updateProject(@PathVariable Long id, @RequestBody ProjectDTO projectDTO){
-        return projectsService.updateProject(id, projectDTO);
+    @PutMapping("")
+    public ProjectDTO updateProject(@RequestBody ProjectDTO projectDTO){
+        return projectsService.updateProject(projectDTO);
     }
 
     @DeleteMapping("all")
