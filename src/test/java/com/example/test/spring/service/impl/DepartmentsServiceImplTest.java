@@ -129,9 +129,9 @@ class DepartmentsServiceImplTest {
     @Test
     void updateDepartment(){
         Department departmentEntity = createDepartmentEntity();
-        DepartmentDTO departmentDTO = createDepartmentDTO();
         DepartmentDTO updatedDepartmentData = DepartmentDTO.builder().
-                departmentName("New Value")
+                departmentId("1")
+                .departmentName("New Value")
                 .build();
 
         Optional<Department> optionalDepartment = Optional.of(departmentEntity);
@@ -139,21 +139,13 @@ class DepartmentsServiceImplTest {
         when(departmentsRepository.findById(anyInt())).thenReturn(optionalDepartment);
         when(departmentsRepository.save(any(Department.class))).thenReturn(departmentEntity);
         when(departmentsMapper.toEntity(any(DepartmentDTO.class))).thenReturn(departmentEntity);
-        when(departmentsMapper.toDTO(any(Department.class))).thenReturn(departmentDTO);
-
-        System.out.println(updatedDepartmentData.getDepartmentName());
-
-        DepartmentDTO addedDepartment = departmentsService.addDepartment(departmentDTO);
-        System.out.println(departmentsService.getDepartmentById(1).getDepartmentName());
+        when(departmentsMapper.toDTO(any(Department.class))).thenReturn(updatedDepartmentData);
 
         DepartmentDTO updatedDepartment = departmentsService.updateDepartment(updatedDepartmentData);
-        System.out.println(updatedDepartment.getDepartmentName());
 
-        DepartmentDTO toCheck = departmentsService.getDepartmentById(1);
-
-        assertInstanceOf(DepartmentDTO.class, updatedDepartment);
         assertNotNull(updatedDepartment);
-        assertSame("New Value", toCheck.getDepartmentName());
+        assertInstanceOf(DepartmentDTO.class, updatedDepartment);
+        assertSame("New Value", updatedDepartment.getDepartmentName());
     }
 
     @Test
