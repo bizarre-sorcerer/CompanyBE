@@ -29,9 +29,9 @@ public class DepartmentsController {
         return departmentsService.addDepartment(departmentDTO);
     }
 
-    @PutMapping("/{id}")
-    public DepartmentDTO updateDepartment(@PathVariable Integer id, @RequestBody DepartmentDTO departmentDTO){
-        return departmentsService.updateDepartment(id, departmentDTO);
+    @PutMapping("/")
+    public DepartmentDTO updateDepartment(@RequestBody DepartmentDTO departmentDTO){
+        return departmentsService.updateDepartment(departmentDTO);
     }
 
     @DeleteMapping("/all")

@@ -22,7 +22,8 @@ public class DepartmentsServiceImpl implements DepartmentsService {
 
     @Override
     public Page<DepartmentDTO> getAllDepartments(Pageable pageable) {
-        log.info("Get all departments");
+        log.info("Getting all departments");
+
         Page<Department> departments = departmentsRepository.findAll(pageable);
         return departments.map(departmentsMapper::toDTO);
     }
@@ -46,13 +47,14 @@ public class DepartmentsServiceImpl implements DepartmentsService {
     }
 
     @Override
-    public DepartmentDTO updateDepartment(Integer id, DepartmentDTO departmentDTO) {
+    public DepartmentDTO updateDepartment(DepartmentDTO departmentDTO) {
+        Integer id = Integer.valueOf(departmentDTO.getDepartmentId());
         departmentsRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Department not found with id: "+ id));
-        Department department = departmentsMapper.toEntity(departmentDTO);
-        department.setId(id);
-        Department saveDepartment = departmentsRepository.save(department);
-        return departmentsMapper.toDTO(saveDepartment);
+                .orElseThrow(() -> new EntityNotFoundException("Department not found with id: " + id));
+
+        Department updatedDepartment = departmentsMapper.toEntity(departmentDTO);
+        Department savedDepartment = departmentsRepository.save(updatedDepartment);
+        return departmentsMapper.toDTO(savedDepartment);
     }
 
     @Override

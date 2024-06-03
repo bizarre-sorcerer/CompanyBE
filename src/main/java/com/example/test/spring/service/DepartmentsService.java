@@ -13,7 +13,7 @@ public interface DepartmentsService {
 
     DepartmentDTO addDepartment(DepartmentDTO department);
 
-    DepartmentDTO updateDepartment(Integer id, DepartmentDTO departmentDTO);
+    DepartmentDTO updateDepartment(DepartmentDTO departmentDTO);
 
     void deleteAll();
 
