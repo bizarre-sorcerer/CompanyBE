@@ -28,6 +28,11 @@ public class QualificationController {
         return qualifactionService.createQualification(qualificationDTO);
     }
 
+    @PutMapping
+    public QualificationDTO updateQualification(@RequestBody QualificationDTO qualificationDTO){
+        return qualifactionService.updateQualification(qualificationDTO);
+    }
+
     @DeleteMapping("/all")
     public void deleteAllQualification() {
         qualifactionService.deleteAll();

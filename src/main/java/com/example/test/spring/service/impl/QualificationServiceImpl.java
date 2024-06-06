@@ -44,6 +44,16 @@ public class QualificationServiceImpl implements QualificationService {
     }
 
     @Override
+    public QualificationDTO updateQualification(QualificationDTO qualificationDTO){
+        Integer id = qualificationDTO.getId();
+        qualificationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Qualification not found with id: " + id));
+        Qualification updatedQualification = qualificationMapper.toEntity(qualificationDTO);
+        Qualification savedQualification = qualificationRepository.save(updatedQualification);
+        return qualificationMapper.toDTO(savedQualification);
+    }
+
+    @Override
     public void deleteAll() {
         qualificationRepository.deleteAll();
     }

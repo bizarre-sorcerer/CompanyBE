@@ -51,7 +51,6 @@ public class DepartmentsServiceImpl implements DepartmentsService {
         Integer id = Integer.valueOf(departmentDTO.getDepartmentId());
         departmentsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Department not found with id: " + id));
-
         Department updatedDepartment = departmentsMapper.toEntity(departmentDTO);
         Department savedDepartment = departmentsRepository.save(updatedDepartment);
         return departmentsMapper.toDTO(savedDepartment);
