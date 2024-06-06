@@ -28,6 +28,11 @@ public class PositionsController {
         return positionService.addPosition(positionDTO);
     }
 
+    @PutMapping()
+    public PositionDTO updatePosition(@RequestBody PositionDTO positionDTO){
+        return positionService.updatePosition(positionDTO);
+    }
+
     @DeleteMapping("/all")
     public void clearAllEmployees() {
         positionService.deleteAll();

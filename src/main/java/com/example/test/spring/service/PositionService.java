@@ -9,7 +9,9 @@ public interface PositionService {
 
     PositionDTO getPositionById(Integer positionId);
 
-    PositionDTO addPosition(PositionDTO departmentDTO);
+    PositionDTO addPosition(PositionDTO positionDTO);
+
+    PositionDTO updatePosition(PositionDTO positionDTO);
 
     void deleteAll();
 

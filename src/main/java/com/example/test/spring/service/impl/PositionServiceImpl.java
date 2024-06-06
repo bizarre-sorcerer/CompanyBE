@@ -42,6 +42,16 @@ public class PositionServiceImpl implements PositionService {
     }
 
     @Override
+    public PositionDTO updatePosition(PositionDTO positionDTO){
+        Integer id = positionDTO.getId();
+        positionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Department not found with id: " + id));
+        Position updatedPosition = positionsMapper.toEntity(positionDTO);
+        Position savedPosition = positionRepository.save(updatedPosition);
+        return positionsMapper.toDTO(savedPosition);
+    }
+
+    @Override
     public void deleteAll() {
         positionRepository.deleteAll();
     }
