@@ -6,7 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PositionDTO {
-
     private Integer id;
     private String jobTitle;
 }

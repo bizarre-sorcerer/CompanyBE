@@ -3,10 +3,20 @@ package com.example.test.spring.controllers;
 import com.example.test.spring.dto.DepartmentDTO;
 import com.example.test.spring.service.DepartmentsService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.UUID;
+
+@Slf4j
 @RestController
 @RequestMapping("/departments")
 @RequiredArgsConstructor
@@ -16,6 +26,7 @@ public class DepartmentsController {
 
     @GetMapping
     public Page<DepartmentDTO> getAllDepartments(Pageable pageable) {
+        log.info(String.valueOf(Timestamp.valueOf(LocalDateTime.now())));
         return departmentsService.getAllDepartments(pageable);
     }
 

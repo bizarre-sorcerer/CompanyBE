@@ -10,13 +10,14 @@ services:
       - .:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
-  postgresTest:
-    image: postgres:15.3
-    environment:
-      POSTGRES_DB: "postgredb"
-      POSTGRES_USER: "root_aidar"
-      POSTGRES_PASSWORD: "asdf"
-    volumes:
-      - .:/docker-entrypoint-initdb.d
+
+  spring-app:
+    build: .
     ports:
-      - "5436:5432"
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgredb
+      SPRING_DATASOURCE_USERNAME: root_aidar
+      SPRING_DATASOURCE_PASSWORD: asdf
