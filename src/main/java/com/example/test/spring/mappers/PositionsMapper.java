@@ -1,7 +1,7 @@
 package com.example.test.spring.mappers;
 
-import com.example.test.spring.dto.PositionDTO;
-import com.example.test.spring.entities.Position;
+import com.example.test.spring.models.dtos.PositionDTO;
+import com.example.test.spring.models.entities.Position;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

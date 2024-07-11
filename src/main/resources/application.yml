@@ -14,5 +14,7 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   flyway:
+    enabled: true
     baseline-on-migrate: true
     locations: classpath:db/migration
+    repair: true

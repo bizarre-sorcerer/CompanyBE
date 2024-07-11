@@ -1,12 +1,11 @@
 package com.example.test.spring.controllers;
 
-import com.example.test.spring.dto.DepartmentDTO;
+import com.example.test.spring.models.dtos.DepartmentDTO;
 import com.example.test.spring.service.DepartmentsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @RestController
-@RequestMapping("/departments")
+@RequestMapping("/api/departments")
 @RequiredArgsConstructor
 public class DepartmentsController {
 
@@ -36,9 +35,9 @@ public class DepartmentsController {
         return departmentsService.addDepartment(departmentDTO);
     }
 
-    @PutMapping("/")
-    public DepartmentDTO updateDepartment(@RequestBody DepartmentDTO departmentDTO){
-        return departmentsService.updateDepartment(departmentDTO);
+    @PutMapping("/{id}")
+    public DepartmentDTO updateDepartment(@RequestBody DepartmentDTO departmentDTO, @PathVariable Long id){
+        return departmentsService.updateDepartment(departmentDTO, id);
     }
 
     @DeleteMapping("/all")

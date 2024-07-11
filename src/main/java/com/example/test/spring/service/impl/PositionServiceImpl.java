@@ -1,7 +1,7 @@
 package com.example.test.spring.service.impl;
 
-import com.example.test.spring.dto.PositionDTO;
-import com.example.test.spring.entities.Position;
+import com.example.test.spring.models.dtos.PositionDTO;
+import com.example.test.spring.models.entities.Position;
 import com.example.test.spring.mappers.PositionsMapper;
 import com.example.test.spring.repositories.PositionRepository;
 import com.example.test.spring.service.PositionService;
@@ -42,8 +42,7 @@ public class PositionServiceImpl implements PositionService {
     }
 
     @Override
-    public PositionDTO updatePosition(PositionDTO positionDTO){
-        Integer id = positionDTO.getId();
+    public PositionDTO updatePosition(PositionDTO positionDTO, Long id){
         positionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Department not found with id: " + id));
         Position updatedPosition = positionsMapper.toEntity(positionDTO);

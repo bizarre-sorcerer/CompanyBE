@@ -1,7 +1,7 @@
 package com.example.test.spring.service.impl;
 
 import com.example.test.spring.client.FeignService;
-import com.example.test.spring.dto.ProjectDTO;
+import com.example.test.spring.models.dtos.ProjectDTO;
 import com.example.test.spring.service.ProjectsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,9 +27,8 @@ public class ProjectsServiceImpl implements ProjectsService {
     }
 
     @Override
-    public ProjectDTO updateProject(ProjectDTO projectDTO){
-        Long id = projectDTO.getId();
-        return feignService.updateProject(id, projectDTO);
+    public ProjectDTO updateProject(ProjectDTO projectDTO, Long id){
+        return feignService.updateProject(projectDTO, id);
     }
 
     @Override

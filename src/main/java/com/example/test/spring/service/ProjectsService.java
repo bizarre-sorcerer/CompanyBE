@@ -1,7 +1,6 @@
 package com.example.test.spring.service;
 
-import com.example.test.spring.dto.ProjectDTO;
-import org.springframework.data.domain.Page;
+import com.example.test.spring.models.dtos.ProjectDTO;
 
 public interface ProjectsService {
     String getAll();
@@ -10,7 +9,7 @@ public interface ProjectsService {
 
     ProjectDTO addProject(ProjectDTO projectDTO);
 
-    ProjectDTO updateProject(ProjectDTO projectDTO);
+    ProjectDTO updateProject(ProjectDTO projectDTO, Long id);
 
     void deleteAll();
 

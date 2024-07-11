@@ -1,6 +1,6 @@
 package com.example.test.spring.client;
 
-import com.example.test.spring.dto.ProjectDTO;
+import com.example.test.spring.models.dtos.ProjectDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +17,7 @@ public interface FeignService {
     ProjectDTO addProject(@RequestBody ProjectDTO projectDTO);
 
     @PutMapping("{id}")
-    ProjectDTO updateProject(@PathVariable Long id, @RequestBody ProjectDTO projectDTO);
+    ProjectDTO updateProject(@RequestBody ProjectDTO projectDTO, @PathVariable Long id);
 
     @DeleteMapping("/all")
     void deleteAll();
