@@ -1,4 +1,4 @@
-package com.example.test.spring.dto;
+package com.example.test.spring.models.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PositionDTO {
-    private Integer id;
+    private Long id;
     private String jobTitle;
 }

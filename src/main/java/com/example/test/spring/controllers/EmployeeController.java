@@ -1,17 +1,17 @@
 package com.example.test.spring.controllers;
 
-import com.example.test.spring.dto.EmployeeDTO;
+import com.example.test.spring.models.dtos.EmployeeDTO;
 import com.example.test.spring.service.EmployeeService;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/employees")
+@RequestMapping("/api/employees")
 @RequiredArgsConstructor
 public class EmployeeController {
+
     private final EmployeeService employeeService;
 
     @GetMapping
@@ -29,9 +29,9 @@ public class EmployeeController {
         return employeeService.createEmployee(employeeDTO);
     }
 
-    @PutMapping("/")
-    public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO employeeDTO){
-        return employeeService.updateEmployee(employeeDTO);
+    @PutMapping("/{id}")
+    public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO employeeDTO, @PathVariable Long id){
+        return employeeService.updateEmployee(employeeDTO, id);
     }
 
     @DeleteMapping("/all")

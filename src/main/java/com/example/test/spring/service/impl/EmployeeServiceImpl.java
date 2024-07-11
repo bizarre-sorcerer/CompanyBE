@@ -1,10 +1,10 @@
 package com.example.test.spring.service.impl;
 
-import com.example.test.spring.dto.EmployeeDTO;
-import com.example.test.spring.entities.Department;
-import com.example.test.spring.entities.Employee;
-import com.example.test.spring.entities.Position;
-import com.example.test.spring.entities.Qualification;
+import com.example.test.spring.models.dtos.EmployeeDTO;
+import com.example.test.spring.models.entities.Department;
+import com.example.test.spring.models.entities.Employee;
+import com.example.test.spring.models.entities.Position;
+import com.example.test.spring.models.entities.Qualification;
 import com.example.test.spring.mappers.EmployeesMapper;
 import com.example.test.spring.repositories.DepartmentsRepository;
 import com.example.test.spring.repositories.EmployeeRepository;
@@ -54,9 +54,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
         Employee employee = employeesMapper.toEntity(employeeDTO);
 
-        Integer departmentId = employeeDTO.getDepartment().getId();
-        Integer qualificationId = employeeDTO.getQualification().getId();
-        Integer positionId = employeeDTO.getPosition().getId();
+        Long departmentId = employeeDTO.getDepartment().getId();
+        Long qualificationId = employeeDTO.getQualification().getId();
+        Long positionId = employeeDTO.getPosition().getId();
 
         Department department = departmentsRepository.findById(departmentId)
                 .orElseThrow(() -> new EntityNotFoundException("Department not found with this id: " + departmentId));
@@ -75,8 +75,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO) {
-        Integer id = employeeDTO.getId();
+    public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO, Long id) {
         employeeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found with id: " + id));
 

@@ -1,4 +1,4 @@
-package com.example.test.spring.dto;
+package com.example.test.spring.models.dtos;
 
 import lombok.Getter;
 import lombok.Setter;

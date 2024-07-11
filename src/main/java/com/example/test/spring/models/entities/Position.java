@@ -1,4 +1,4 @@
-package com.example.test.spring.entities;
+package com.example.test.spring.models.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,9 +15,9 @@ import lombok.Setter;
 public class Position {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "employee_generator")
-    @SequenceGenerator(name = "employee_generator", sequenceName = "employees_seq", allocationSize = 1)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "generator")
+    @SequenceGenerator(name = "generator", sequenceName = "all_sequence", allocationSize = 1)
+    private Long id;
 
     @Column(name = "job_title")
     private String jobTitle;

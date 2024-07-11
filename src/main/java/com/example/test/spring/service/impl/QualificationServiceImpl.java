@@ -1,8 +1,7 @@
 package com.example.test.spring.service.impl;
 
-import com.example.test.spring.dto.QualificationDTO;
-import com.example.test.spring.entities.Department;
-import com.example.test.spring.entities.Qualification;
+import com.example.test.spring.models.dtos.QualificationDTO;
+import com.example.test.spring.models.entities.Qualification;
 import com.example.test.spring.mappers.QualificationMapper;
 import com.example.test.spring.repositories.QualificationRepository;
 import com.example.test.spring.service.QualificationService;
@@ -11,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

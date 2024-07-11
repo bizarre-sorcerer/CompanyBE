@@ -1,6 +1,6 @@
 package com.example.test.spring.service;
 
-import com.example.test.spring.dto.PositionDTO;
+import com.example.test.spring.models.dtos.PositionDTO;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public interface PositionService {
 
     PositionDTO addPosition(PositionDTO positionDTO);
 
-    PositionDTO updatePosition(PositionDTO positionDTO);
+    PositionDTO updatePosition(PositionDTO positionDTO, Long id);
 
     void deleteAll();
 

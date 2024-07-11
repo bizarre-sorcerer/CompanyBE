@@ -3,14 +3,14 @@ package com.example.test.spring.utils;
 import org.mapstruct.Named;
 
 public class DepartmentsUtil {
-    @Named("convertToInteger")
-    public static Integer toInteger(String value) {
+    @Named("convertToLong")
+    public static Long toLong(String value) {
         if (value == null || value.isEmpty()){
             return null;
         }
 
         try {
-            return Integer.valueOf(value);
+            return Long.valueOf(value);
         } catch (NumberFormatException e){
             return null;
         }

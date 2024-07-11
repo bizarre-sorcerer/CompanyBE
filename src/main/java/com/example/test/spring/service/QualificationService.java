@@ -1,7 +1,6 @@
 package com.example.test.spring.service;
 
-import com.example.test.spring.dto.QualificationDTO;
-import com.example.test.spring.entities.Qualification;
+import com.example.test.spring.models.dtos.QualificationDTO;
 
 import java.util.List;
 

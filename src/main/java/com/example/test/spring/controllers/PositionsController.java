@@ -1,6 +1,6 @@
 package com.example.test.spring.controllers;
 
-import com.example.test.spring.dto.PositionDTO;
+import com.example.test.spring.models.dtos.PositionDTO;
 import com.example.test.spring.service.PositionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/positions")
+@RequestMapping("/api/positions")
 @RequiredArgsConstructor
 public class PositionsController {
     private final PositionService positionService;
@@ -28,9 +28,9 @@ public class PositionsController {
         return positionService.addPosition(positionDTO);
     }
 
-    @PutMapping()
-    public PositionDTO updatePosition(@RequestBody PositionDTO positionDTO){
-        return positionService.updatePosition(positionDTO);
+    @PutMapping("/{id}")
+    public PositionDTO updatePosition(@RequestBody PositionDTO positionDTO, @PathVariable Long id){
+        return positionService.updatePosition(positionDTO, id);
     }
 
     @DeleteMapping("/all")

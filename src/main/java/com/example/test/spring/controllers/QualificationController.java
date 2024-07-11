@@ -1,6 +1,6 @@
 package com.example.test.spring.controllers;
 
-import com.example.test.spring.dto.QualificationDTO;
+import com.example.test.spring.models.dtos.QualificationDTO;
 import com.example.test.spring.service.QualificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

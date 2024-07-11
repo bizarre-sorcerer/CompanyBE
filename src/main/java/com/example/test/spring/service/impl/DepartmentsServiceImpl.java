@@ -1,7 +1,7 @@
 package com.example.test.spring.service.impl;
 
-import com.example.test.spring.dto.DepartmentDTO;
-import com.example.test.spring.entities.Department;
+import com.example.test.spring.models.dtos.DepartmentDTO;
+import com.example.test.spring.models.entities.Department;
 import com.example.test.spring.mappers.DepartmentsMapper;
 import com.example.test.spring.repositories.DepartmentsRepository;
 import com.example.test.spring.service.DepartmentsService;
@@ -47,8 +47,7 @@ public class DepartmentsServiceImpl implements DepartmentsService {
     }
 
     @Override
-    public DepartmentDTO updateDepartment(DepartmentDTO departmentDTO) {
-        Integer id = Integer.valueOf(departmentDTO.getDepartmentId());
+    public DepartmentDTO updateDepartment(DepartmentDTO departmentDTO, Long id) {
         departmentsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Department not found with id: " + id));
         Department updatedDepartment = departmentsMapper.toEntity(departmentDTO);
